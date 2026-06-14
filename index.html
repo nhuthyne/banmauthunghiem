@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGK Địa Lí 12 - Bài 1: Vị trí địa lí và phạm vi lãnh thổ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --navy-dark:  #0f2042; 
+            --blue-brand: #1a4f9c; 
+            --blue-mid:   #3b82f6; 
+            --blue-light: #eff6ff; 
+            --gold-accent:#fbbf24;
+            --text-main:  #334155;
+            --text-muted: #64748b; 
+            --border-subtle: #e2e8f0;
+            --white:      #ffffff;
+            --correct-bg: #dcfce7;
+            --correct-br: #22c55e;
+            --wrong-bg:   #fee2e2;
+            --wrong-br:   #ef4444;
+        }
+
+        body {
+            background-color: #e2e8f0; 
+            padding: 40px 0;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .document-page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto 30px auto;
+            background-color: var(--white);
+            box-shadow: 0 15px 35px rgba(15, 32, 66, 0.15);
+            padding: 20mm 18mm 25mm 18mm; 
+            position: relative;
+            box-sizing: border-box;
+            color: var(--text-main);
+            overflow: visible; 
+            page-break-after: always;
+            z-index: 1;
+        }
+
+        .document-page::after {
+            content: "Designed by Codelo.io.vn";
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 5rem; font-family: 'Lexend', sans-serif;
+            font-weight: 800; color: rgba(15, 32, 66, 0.03); 
+            white-space: nowrap; pointer-events: none; 
+            user-select: none; z-index: 999; 
+        }
+
+        .lesson-banner {
+            background: linear-gradient(135deg, #0f2042 0%, #1a4f9c 100%);
+            color: #ffffff; padding: 24px 28px; 
+            border-radius: 12px; margin-bottom: 24px;
+            position: relative; z-index: 2;
+            box-shadow: 0 10px 20px rgba(26, 79, 156, 0.15);
+        }
+        .chapter-badge {
+            font-family: 'Lexend', sans-serif;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #93c5fd; padding: 4px 12px;
+            border-radius: 30px; font-size: 0.75rem;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            display: inline-block; margin-bottom: 8px;
+        }
+        .lesson-title {
+            font-family: 'Lexend', sans-serif; margin: 0;
+            font-size: 1.9rem; font-weight: 800; line-height: 1.3;
+        }
+
+        .section-badge {
+            font-family: 'Lexend', sans-serif; font-size: 1.25rem;
+            font-weight: 800; color: #0f2042;
+            margin: 24px 0 14px 0; display: flex; align-items: center;
+            z-index: 2; position: relative;
+        }
+        .section-badge::before {
+            content: ""; display: inline-block; width: 5px; height: 20px;
+            background: linear-gradient(to bottom, #3b82f6, #1a4f9c);
+            border-radius: 4px; margin-right: 12px;
+        }
+
+        .paragraph {
+            font-size: 1.05rem; line-height: 1.6; text-align: justify;
+            margin-bottom: 12px; position: relative; z-index: 2;
+        }
+
+        .focus-box {
+            background: #eff6ff; border-radius: 10px; padding: 16px 20px;
+            margin-bottom: 20px; border: 1px solid #dbeafe;
+            position: relative; z-index: 2;
+        }
+        .focus-box-title {
+            font-family: 'Lexend', sans-serif; color: #1a4f9c;
+            font-weight: 700; font-size: 1rem; margin-bottom: 6px;
+        }
+
+        .smart-word {
+            color: #1a4f9c; font-weight: 600; cursor: pointer;
+            border-bottom: 1.5px dashed #93c5fd; transition: all 0.2s ease;
+            position: relative;
+        }
+        .smart-word:hover {
+            color: #0f2042; background-color: #f8fafc; border-bottom-style: solid;
+        }
+        .smart-panel {
+            display: none; margin-top: 8px; margin-bottom: 12px;
+            padding: 12px 16px; border-radius: 8px; background: #f8fafc;
+            border-left: 4px solid #3b82f6; border: 1px solid #e2e8f0;
+            font-size: 0.95rem; color: #334155; animation: slideDown 0.3s ease;
+        }
+        .smart-panel::before {
+            content: '📌 Chú giải: '; font-weight: 700; color: #1a4f9c;
+        }
+
+        .data-map-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 10px; margin: 14px 0; position: relative; z-index: 2;
+        }
+        .data-card {
+            background: #f8fafc; border: 1px solid #e2e8f0;
+            border-radius: 8px; padding: 12px 14px;
+            page-break-inside: avoid;
+        }
+        .data-tag {
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #3b82f6;
+        }
+        .data-main {
+            font-family: 'Lexend', sans-serif; font-size: 1.2rem;
+            font-weight: 800; color: #0f2042; margin: 2px 0;
+        }
+        .data-sub { font-size: 0.75rem; color: #64748b; margin: 0; }
+
+        .diagram-box {
+            background: #f8fafc; border: 1px dashed #93c5fd;
+            border-radius: 12px; padding: 16px; margin: 20px 0;
+            position: relative; z-index: 2; text-align: center;
+            page-break-inside: avoid;
+        }
+        .diagram-title {
+            font-family: 'Lexend', sans-serif; font-size: 0.95rem;
+            color: #1a4f9c; font-weight: 700; margin-bottom: 15px; text-transform: uppercase;
+        }
+        .diagram-flow {
+            display: flex; justify-content: space-between; align-items: center; gap: 8px;
+        }
+        .flow-node {
+            background: white; border: 1.5px solid #3b82f6; border-radius: 8px;
+            padding: 10px; flex: 1; font-weight: 600; font-size: 0.85rem; color: #0f2042;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+        }
+        .flow-sub { display: block; font-size: 0.7rem; color: #64748b; font-weight: 400; margin-top: 4px; }
+        .flow-arrow { display: flex; align-items: center; justify-content: center; }
+
+        .visual-frame {
+            background-color: #eff6ff; border: 2px dashed #bfdbfe;
+            border-radius: 12px; height: 100%; min-height: 320px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 20px; text-align: center; position: relative; z-index: 2;
+        }
+
+        .content-module {
+            background: #fff; border: 1px solid #e2e8f0;
+            border-radius: 10px; padding: 16px; margin-bottom: 12px;
+            position: relative; z-index: 2;
+            page-break-inside: avoid; 
+            break-inside: avoid;
+        }
+        .module-accent {
+            font-family: 'Lexend', sans-serif; font-weight: 700;
+            color: #1a4f9c; font-size: 1.05rem; margin-bottom: 6px;
+        }
+
+        .modern-table {
+            width: 100%; border-collapse: collapse; margin: 12px 0;
+            font-size: 0.95rem; position: relative; z-index: 2;
+            page-break-inside: avoid;
+        }
+        .modern-table th {
+            background-color: #eff6ff; color: #0f2042; font-weight: 700;
+            padding: 10px 14px; text-align: left; border-bottom: 2px solid #cbd5e1;
+        }
+        .modern-table td {
+            padding: 10px 14px; border-bottom: 1px solid #e2e8f0;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #0f2042 0%, #1e3a8a 100%);
+            color: #ffffff; border-radius: 10px; padding: 20px 24px;
+            margin-bottom: 24px; position: relative; z-index: 2;
+            page-break-inside: avoid;
+        }
+        .summary-title {
+            font-family: 'Lexend', sans-serif; font-size: 1.15rem;
+            color: #fbbf24; margin-bottom: 12px; display: flex;
+            align-items: center; text-transform: uppercase;
+        }
+        .summary-list li { margin-bottom: 8px; font-size: 1rem; line-height: 1.5; }
+
+        .mcq-container {
+            margin-bottom: 20px; position: relative; z-index: 2; 
+            page-break-inside: avoid; break-inside: avoid;
+        }
+        .question-text {
+            font-weight: 600; color: #0f2042; font-size: 1.05rem; margin-bottom: 12px;
+        }
+        .question-text .q-num {
+            color: #1a4f9c; font-family: 'Lexend', sans-serif; font-weight: 800; margin-right: 5px;
+        }
+        .options-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; 
+        }
+        .option-item {
+            background-color: #f8fafc; border: 1px solid #e2e8f0;
+            border-radius: 8px; padding: 10px 14px; font-size: 0.95rem;
+            cursor: pointer; transition: all 0.2s; position: relative;
+        }
+        .option-item:hover { border-color: #3b82f6; background-color: #eff6ff; }
+        
+        .option-item.selected {
+            background-color: #e0f2fe; border-color: #0284c7; box-shadow: 0 0 0 1px #0284c7;
+        }
+        .opt-char { font-weight: 700; color: #1a4f9c; margin-right: 8px; }
+
+        body.submitted .option-item.correct-ans {
+            background-color: var(--correct-bg) !important; border-color: var(--correct-br) !important;
+            box-shadow: 0 0 0 1px var(--correct-br) !important; color: #166534;
+        }
+        body.submitted .option-item.wrong-ans {
+            background-color: var(--wrong-bg) !important; border-color: var(--wrong-br) !important;
+            box-shadow: 0 0 0 1px var(--wrong-br) !important; color: #991b1b;
+        }
+
+        .answer-box {
+            display: none; margin-top: 10px; padding: 14px 18px;
+            border-radius: 8px; font-size: 0.9rem; background: #f8fafc;
+            border: 1px solid #cbd5e1; color: #334155; border-left: 4px solid #1a4f9c;
+        }
+        .answer-box.show { display: block; animation: slideDown 0.3s ease-in-out; }
+        .ans-label { font-weight: 700; color: #1a4f9c; font-family: 'Lexend', sans-serif; }
+
+        .tf-card {
+            border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 20px;
+            overflow: hidden; background: #fff; position: relative; z-index: 2; 
+            page-break-inside: avoid; break-inside: avoid;
+        }
+        .tf-header {
+            background-color: #eff6ff; padding: 12px 16px; border-bottom: 1px solid #e2e8f0;
+            font-weight: 600; color: #0f2042; font-size: 1rem;
+        }
+        .tf-table { width: 100%; border-collapse: collapse; }
+        .tf-table th {
+            font-size: 0.8rem; text-transform: uppercase; color: #64748b;
+            padding: 10px; text-align: center; border-bottom: 1px solid #e2e8f0;
+        }
+        .tf-table td {
+            padding: 10px 16px; border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle; font-size: 0.95rem;
+        }
+        .tf-table td:nth-child(2), .tf-table td:nth-child(3) {
+            text-align: center; width: 70px; border-left: 1px solid #e2e8f0;
+        }
+        .tf-table tr:last-child td { border-bottom: none; }
+        
+        .check-circle {
+            display: inline-block; width: 22px; height: 22px;
+            border: 2px solid #cbd5e1; border-radius: 50%;
+            transition: 0.2s; cursor: pointer;
+        }
+        .check-circle.ticked { background-color: #3b82f6; border-color: #1d4ed8; }
+        
+        body.submitted .check-circle.ticked.correct-tf { background-color: var(--correct-br); border-color: #166534; }
+        body.submitted .check-circle.ticked.wrong-tf { background-color: var(--wrong-br); border-color: #991b1b; }
+        body.submitted .check-circle.missed-tf { border: 3px solid var(--correct-br); background-color: transparent; }
+
+        .quiz-controls {
+            display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 15px;
+            margin-top: 30px; padding-top: 25px; border-top: 2px dashed #cbd5e1; position: relative; z-index: 2;
+        }
+        .btn-group-custom { display: flex; gap: 15px; }
+        
+        .btn-custom {
+            font-family: 'Lexend', sans-serif; font-size: 0.95rem; font-weight: 700;
+            padding: 12px 28px; border-radius: 30px; cursor: pointer;
+            transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .btn-submit {
+            background: linear-gradient(135deg, #1a4f9c 0%, #3b82f6 100%); color: white; border: none;
+            box-shadow: 0 6px 15px rgba(26, 79, 156, 0.25);
+        }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26, 79, 156, 0.35); }
+        
+        .btn-reset {
+            background: white; color: #1a4f9c; border: 2px solid #1a4f9c;
+        }
+        .btn-reset:hover { background: #eff6ff; transform: translateY(-2px); }
+
+        #score-board {
+            display: none; background: #fff; border: 2px solid #22c55e;
+            border-radius: 12px; padding: 20px; text-align: center;
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.15); width: 100%; max-width: 400px;
+        }
+        #score-board h3 { margin: 0 0 10px 0; color: #166534; font-family: 'Lexend', sans-serif; font-size: 1.4rem; }
+        #score-number { font-size: 2.5rem; font-weight: 800; color: #22c55e; }
+
+        body.submitted .option-item { pointer-events: none; }
+        body.submitted .check-circle { pointer-events: none; }
+
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .page-footer {
+            position: absolute; bottom: 12mm; left: 18mm; right: 18mm;
+            display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px solid #e2e8f0; padding-top: 10px;
+            font-size: 0.85rem; color: #64748b; z-index: 2;
+        }
+        .page-num { font-family: 'Lexend', sans-serif; font-weight: 800; color: #1a4f9c; }
+
+        /* TỐI ƯU BẢN IN NÂNG CAO - TRIỆT ĐỂ CHỐNG CẮT TRANG VÀ TRANG TRẮNG */
+        @media print {
+            @page { size: A4; margin: 0mm; }
+            body { 
+                background-color: white; margin: 0; padding: 0; 
+                print-color-adjust: exact !important; -webkit-print-color-adjust: exact !important; 
+            }
+            .document-page { 
+                box-shadow: none !important; margin: 0; padding: 12mm 15mm 15mm 15mm !important; 
+                height: auto !important; 
+                min-height: auto !important; /* Mấu chốt xóa trang trắng thừa */
+                overflow: visible !important;
+                page-break-after: always;
+                page-break-inside: auto !important;
+            }
+            /* Xóa lệnh ngắt trang ở trang cuối cùng để không bị lòi ra 1 trang trắng */
+            .document-page:last-of-type {
+                page-break-after: auto !important;
+            }
+            .no-print, .smart-panel, .answer-box, .quiz-controls { display: none !important; }
+            .smart-word { color: inherit; border: none; font-weight: normal; }
+            .options-grid { gap: 6px; }
+            .mcq-container { margin-bottom: 12px; }
+            /* Định vị lại footer cho bản in vì thả nổi chiều cao */
+            .page-footer { position: relative; bottom: 0; margin-top: 25px; left: 0; right: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= TRANG 1 ================= -->
+    <div class="document-page">
+        <header class="lesson-banner">
+            <span class="chapter-badge">Địa lí tự nhiên Việt Nam</span>
+            <h1 class="lesson-title">BÀI 1: VỊ TRÍ ĐỊA LÍ VÀ PHẠM VI LÃNH THỔ</h1>
+        </header>
+
+        <div class="focus-box">
+            <div class="focus-box-title">Mục tiêu bài học:</div>
+            <p class="paragraph mb-0 text-secondary small">
+                Xác định được vị trí địa lí, các điểm cực tọa độ; Trình bày đặc điểm phạm vi lãnh thổ vùng đất, biển, trời; Phân tích tầm quan trọng chiến lược tự nhiên và quốc phòng.
+            </p>
+        </div>
+
+        <h2 class="section-badge">1. Vị trí địa lí và Hệ tọa độ</h2>
+        
+        <div class="row gx-4">
+            <div class="col-7">
+                <p class="paragraph">
+                    Nước Cộng hòa XHCN Việt Nam nằm ở rìa phía Đông của <span class="smart-word no-print" onclick="toggleElem('tip-bandao')">bán đảo Đông Dương</span><span class="d-none d-print-inline">bán đảo Đông Dương</span>, gần trung tâm khu vực Đông Nam Á. Lãnh thổ nước ta hoàn toàn nằm ở nửa cầu Bắc và thuộc <span class="smart-word no-print" onclick="toggleElem('tip-noichituyen')">vùng nội chí tuyến</span><span class="d-none d-print-inline">vùng nội chí tuyến</span>.
+                </p>
+                <div id="tip-bandao" class="smart-panel no-print">
+                    Bán đảo nằm ở Đông Nam Á, bao gồm 3 quốc gia: Việt Nam, Lào và Campuchia. Vị trí này tạo thuận lợi giao lưu trên đất liền và biển.
+                </div>
+                <div id="tip-noichituyen" class="smart-panel no-print">
+                    Khu vực nằm giữa Chí tuyến Bắc và Nam. Giúp nước ta nhận được lượng bức xạ Mặt Trời lớn, nền nhiệt độ cao quanh năm.
+                </div>
+                
+                <p class="paragraph fw-medium text-dark mb-2 mt-3">Hệ tọa độ địa lí trên đất liền:</p>
+                <div class="data-map-grid">
+                    <div class="data-card"><span class="data-tag">Cực Bắc</span><div class="data-main">23°23' B</div><p class="data-sub">Lũng Cú, Tuyên Quang</p></div>
+                    <div class="data-card"><span class="data-tag">Cực Nam</span><div class="data-main">8°34' B</div><p class="data-sub">Đất Mũi, Cà Mau</p></div>
+                    <div class="data-card"><span class="data-tag">Cực Tây</span><div class="data-main">102°09' Đ</div><p class="data-sub">Sín Thầu, Điện Biên</p></div>
+                    <div class="data-card"><span class="data-tag">Cực Đông</span><div class="data-main">109°24' Đ</div><p class="data-sub">Đại Lãnh, Khánh Hòa</p></div>
+                </div>
+            </div>
+            
+            <div class="col-5">
+                <div class="visual-frame">
+                    <svg viewBox="0 0 160 180" width="140" height="160" stroke="#1a4f9c" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mb-3">
+                        <!-- Dải lụa chữ S mềm mại -->
+                        <path d="M 55 20 C 25 50, 75 80, 55 120 C 40 145, 75 160, 50 170" stroke-width="3" />
+                        <!-- Quần đảo (Chỉ là các dấu chấm) -->
+                        <circle cx="110" cy="75" r="2.5" fill="#1a4f9c" stroke="none" />
+                        <circle cx="115" cy="70" r="1.5" fill="#1a4f9c" stroke="none" />
+                        <circle cx="106" cy="78" r="1.5" fill="#1a4f9c" stroke="none" />
+                        
+                        <circle cx="125" cy="140" r="2.5" fill="#1a4f9c" stroke="none" />
+                        <circle cx="120" cy="133" r="1.5" fill="#1a4f9c" stroke="none" />
+                        <circle cx="130" cy="145" r="1.5" fill="#1a4f9c" stroke="none" />
+                        <circle cx="132" cy="138" r="1.5" fill="#1a4f9c" stroke="none" />
+                    </svg>
+                    <span class="fw-bold d-block text-dark" style="font-family: 'Lexend', sans-serif; font-size: 0.95rem;">BẢN ĐỒ VỊ TRÍ ĐỊA LÍ</span>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-badge">2. Phạm vi lãnh thổ toàn vẹn</h2>
+        <div class="content-module">
+            <div class="module-accent">a. Vùng đất liền và hải đảo</div>
+            <p class="paragraph mb-0 small">
+                Tổng diện tích đất liền đạt <strong>331.344 km²</strong>. Đường biên giới tiếp giáp Trung Quốc (1.400 km), Lào (2.100 km) và Campuchia (1.228 km). Đường bờ biển hình chữ S dài 3.260 km. Sở hữu hơn 4.000 hòn đảo lớn nhỏ.
+            </p>
+        </div>
+
+        <footer class="page-footer"><span>Địa lí 12 — Bộ sách Hiện đại</span><span class="page-num">1</span></footer>
+    </div>
+
+
+    <!-- ================= TRANG 2 ================= -->
+    <div class="document-page">
+        <div class="content-module mt-2">
+            <div class="module-accent">b. Vùng biển quy chuẩn</div>
+            <p class="paragraph mb-2 small">
+                Theo <span class="smart-word no-print" onclick="toggleElem('tip-unclos')">Công ước Liên Hợp Quốc về Luật Biển (UNCLOS 1982)</span><span class="d-none d-print-inline">Công ước Liên Hợp Quốc về Luật Biển (UNCLOS 1982)</span>, vùng biển bao gồm 5 bộ phận:
+            </p>
+            <div id="tip-unclos" class="smart-panel no-print">Bộ luật quốc tế toàn diện quy định quyền hạn và trách nhiệm của các quốc gia về biển. Nước ta phê chuẩn công ước này năm 1994.</div>
+
+            <table class="modern-table mt-2">
+                <thead><tr><th style="width: 30%">Bộ phận</th><th style="width: 70%">Phạm vi xác định</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Nội thủy</strong></td>
+                        <td>Vùng nước ở phía trong <span class="smart-word no-print" onclick="toggleElem('tip-coso')">đường cơ sở</span><span class="d-none d-print-inline">đường cơ sở</span>.</td>
+                    </tr>
+                    <tr class="no-print"><td colspan="2" style="padding: 0; border: none;"><div id="tip-coso" class="smart-panel" style="margin: 4px 10px;">Đường nối liền các điểm nhô ra xa nhất của bờ biển, là căn cứ tính chiều rộng các vùng biển.</div></td></tr>
+                    <tr>
+                        <td><strong>Lãnh hải</strong></td>
+                        <td>Vùng biển có chiều rộng 12 hải lý tính từ đường cơ sở. (<span class="smart-word no-print" onclick="toggleElem('tip-lanhhai')">Biên giới quốc gia trên biển</span><span class="d-none d-print-inline">Biên giới quốc gia trên biển</span>)</td>
+                    </tr>
+                    <tr class="no-print"><td colspan="2" style="padding: 0; border: none;"><div id="tip-lanhhai" class="smart-panel" style="margin: 4px 10px;">Ranh giới ngoài của lãnh hải chính là đường biên giới quốc gia trên biển của nước ta.</div></td></tr>
+                    <tr><td><strong>Tiếp giáp lãnh hải</strong></td><td>Vùng biển rộng 12 hải lý bên ngoài lãnh hải.</td></tr>
+                    <tr>
+                        <td><strong>Đặc quyền kinh tế</strong></td>
+                        <td>Vùng biển rộng 200 hải lý, có <span class="smart-word no-print" onclick="toggleElem('tip-dacQuyen')">chủ quyền kinh tế</span><span class="d-none d-print-inline">chủ quyền kinh tế</span> hoàn toàn.</td>
+                    </tr>
+                    <tr class="no-print"><td colspan="2" style="padding: 0; border: none;"><div id="tip-dacQuyen" class="smart-panel" style="margin: 4px 10px;">Quốc gia ven biển có đặc quyền thăm dò, khai thác, bảo tồn và quản lý các tài nguyên thiên nhiên.</div></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="diagram-box no-print">
+            <div class="diagram-title">Mô hình mặt cắt các vùng biển (UNCLOS 1982)</div>
+            <div class="diagram-flow">
+                <div class="flow-node">Nội thủy<span class="flow-sub">Sát bờ</span></div>
+                <div class="flow-arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
+                <div class="flow-node">Lãnh hải<span class="flow-sub">12 hải lí</span></div>
+                <div class="flow-arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
+                <div class="flow-node">Tiếp giáp<span class="flow-sub">12 hải lí</span></div>
+                <div class="flow-arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
+                <div class="flow-node">Đặc quyền KT<span class="flow-sub">200 hải lí</span></div>
+            </div>
+        </div>
+
+        <div class="content-module">
+            <div class="module-accent">c. Vùng trời không gian</div>
+            <p class="paragraph mb-0 small">Khoảng không gian vô tận bao trùm lãnh thổ; trên đất liền xác định bằng biên giới, trên biển là ranh giới ngoài lãnh hải.</p>
+        </div>
+
+        <h2 class="section-badge">3. Ý nghĩa của vị trí địa lí đối với tự nhiên</h2>
+        <ul class="mb-0">
+            <li class="paragraph"><strong>Khí hậu:</strong> Mang tính chất nhiệt đới ẩm gió mùa, nhận mưa lớn từ Biển Đông.</li>
+            <li class="paragraph"><strong>Sinh vật:</strong> Nằm trên lộ trình di cư động - thực vật, đa dạng sinh học cao.</li>
+            <li class="paragraph"><strong>Khoáng sản:</strong> Nằm giao thoa 2 <span class="smart-word no-print" onclick="toggleElem('tip-khoangsan')">vành đai sinh khoáng</span><span class="d-none d-print-inline">vành đai sinh khoáng</span> lớn.</li>
+        </ul>
+        <div id="tip-khoangsan" class="smart-panel no-print mb-4">
+            Khu vực có cấu trúc địa chất đặc biệt (Thái Bình Dương & Địa Trung Hải), tập trung hình thành nhiều mỏ khoáng sản giá trị.
+        </div>
+
+        <footer class="page-footer"><span>Địa lí 12 — Bộ sách Hiện đại</span><span class="page-num">2</span></footer>
+    </div>
+
+
+    <!-- ================= TRANG 3 ================= -->
+    <div class="document-page">
+        <div class="summary-box">
+            <div class="summary-title">GHI NHỚ CỐT LÕI</div>
+            <ul class="summary-list mb-0">
+                <li><strong>Vị trí địa lí:</strong> Rìa Đông bán đảo Đông Dương, nội chí tuyến bán cầu Bắc.</li>
+                <li><strong>Phạm vi lãnh thổ:</strong> 3 bộ phận: Vùng đất, Vùng biển, Vùng trời.</li>
+                <li><strong>Ý nghĩa tự nhiên:</strong> Thiên nhiên mang tính chất nhiệt đới ẩm gió mùa, sinh vật - khoáng sản phong phú.</li>
+                <li><strong>Ý nghĩa kinh tế:</strong> Nằm trên ngã tư đường hàng hải, thuận lợi giao thương.</li>
+            </ul>
+        </div>
+
+        <h2 class="section-badge">PHẦN LUYỆN TẬP</h2>
+        <div class="module-accent mb-3" style="font-size: 1.1rem;">I. Trắc nghiệm nhiều lựa chọn</div>
+
+        <div class="mcq-container">
+            <div class="question-text"><span class="q-num">Câu 1.</span> Vị trí địa lí nước ta nằm ở:</div>
+            <div class="options-grid">
+                <div class="option-item" onclick="selectOpt(this)" data-ans="true"><span class="opt-char">A.</span> Rìa phía Đông bán đảo Đông Dương.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">B.</span> Trung tâm của khu vực châu Á.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">C.</span> Rìa phía Tây bán đảo Đông Dương.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">D.</span> Phía Nam vành đai sinh khoáng.</div>
+            </div>
+            <div class="answer-box"><span class="ans-label">Giải thích:</span> Nước ta nằm ở rìa phía Đông của bán đảo Đông Dương, gần trung tâm ĐNA.</div>
+        </div>
+
+        <div class="mcq-container">
+            <div class="question-text"><span class="q-num">Câu 2.</span> Điểm cực Bắc phần đất liền nước ta thuộc tỉnh:</div>
+            <div class="options-grid">
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">A.</span> Cao Bằng.</div>
+                <div class="option-item" onclick="selectOpt(this)" data-ans="true"><span class="opt-char">B.</span> Tuyên Quang.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">C.</span> Lạng Sơn.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">D.</span> Điện Biên.</div>
+            </div>
+            <div class="answer-box"><span class="ans-label">Giải thích:</span> Cực Bắc nằm tại xã Lũng Cú, tỉnh Tuyên Quang.</div>
+        </div>
+
+        <div class="mcq-container">
+            <div class="question-text"><span class="q-num">Câu 3.</span> Đường bờ biển nước ta dài bao nhiêu km?</div>
+            <div class="options-grid">
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">A.</span> 2360 km.</div>
+                <div class="option-item" onclick="selectOpt(this)" data-ans="true"><span class="opt-char">B.</span> 3260 km.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">C.</span> 4600 km.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">D.</span> 3444 km.</div>
+            </div>
+            <div class="answer-box"><span class="ans-label">Giải thích:</span> Đường bờ biển dài 3.260 km kéo dài từ Móng Cái đến Hà Tiên.</div>
+        </div>
+
+        <footer class="page-footer"><span>Địa lí 12 — Bộ sách Hiện đại</span><span class="page-num">3</span></footer>
+    </div>
+
+
+    <!-- ================= TRANG 4 ================= -->
+    <div class="document-page">
+        <div class="mcq-container mt-2">
+            <div class="question-text"><span class="q-num">Câu 4.</span> Vùng lãnh hải của nước ta rộng bao nhiêu hải lí?</div>
+            <div class="options-grid">
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">A.</span> 10 hải lí.</div>
+                <div class="option-item" onclick="selectOpt(this)" data-ans="true"><span class="opt-char">B.</span> 12 hải lí.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">C.</span> 24 hải lí.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">D.</span> 200 hải lí.</div>
+            </div>
+            <div class="answer-box"><span class="ans-label">Giải thích:</span> Lãnh hải rộng 12 hải lí tính từ đường cơ sở.</div>
+        </div>
+
+        <div class="mcq-container">
+            <div class="question-text"><span class="q-num">Câu 5.</span> Nước ta nằm trong vùng nội chí tuyến nên có:</div>
+            <div class="options-grid">
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">A.</span> Mùa đông lạnh kéo dài.</div>
+                <div class="option-item" onclick="selectOpt(this)" data-ans="true"><span class="opt-char">B.</span> Hai lần Mặt Trời qua thiên đỉnh.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">C.</span> Khí hậu cận xích đạo.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">D.</span> Hệ sinh thái nghèo nàn.</div>
+            </div>
+            <div class="answer-box"><span class="ans-label">Giải thích:</span> Nội chí tuyến giúp có 2 lần Mặt Trời đi qua thiên đỉnh trong năm.</div>
+        </div>
+
+        <div class="mcq-container">
+            <div class="question-text"><span class="q-num">Câu 6.</span> Tỉnh nào sau đây không giáp biển?</div>
+            <div class="options-grid">
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">A.</span> Quảng Ninh.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">B.</span> Thái Bình.</div>
+                <div class="option-item" onclick="selectOpt(this)" data-ans="true"><span class="opt-char">C.</span> Điện Biên.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">D.</span> An Giang.</div>
+            </div>
+            <div class="answer-box"><span class="ans-label">Giải thích:</span> Điện Biên nằm sâu trong đất liền vùng Tây Bắc.</div>
+        </div>
+
+        <div class="mcq-container">
+            <div class="question-text"><span class="q-num">Câu 7.</span> Đường cơ sở được xác định là đường:</div>
+            <div class="options-grid">
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">A.</span> Mép nước thủy triều thấp.</div>
+                <div class="option-item" onclick="selectOpt(this)" data-ans="true"><span class="opt-char">B.</span> Nối các điểm xa nhất bờ biển.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">C.</span> Ranh giới ngoài nội thủy.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">D.</span> Ranh giới tiếp giáp.</div>
+            </div>
+            <div class="answer-box"><span class="ans-label">Giải thích:</span> Đường cơ sở nối liền các điểm nhô ra xa nhất của bờ biển.</div>
+        </div>
+
+        <div class="mcq-container">
+            <div class="question-text"><span class="q-num">Câu 8.</span> Nhờ tiếp giáp Biển Đông nên khí hậu có:</div>
+            <div class="options-grid">
+                <div class="option-item" onclick="selectOpt(this)" data-ans="true"><span class="opt-char">A.</span> Tính hải dương, lượng mưa lớn.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">B.</span> Biên độ nhiệt năm rất lớn.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">C.</span> Mùa đông khô hạn, ít mưa.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">D.</span> Tính chất ôn đới lục địa.</div>
+            </div>
+            <div class="answer-box"><span class="ans-label">Giải thích:</span> Biển Đông mang lại lượng hơi ẩm dồi dào, mưa lớn điều hòa nhiệt độ.</div>
+        </div>
+
+        <footer class="page-footer"><span>Địa lí 12 — Bộ sách Hiện đại</span><span class="page-num">4</span></footer>
+    </div>
+
+
+    <!-- ================= TRANG 5 ================= -->
+    <div class="document-page">
+        <div class="mcq-container mt-2">
+            <div class="question-text"><span class="q-num">Câu 9.</span> Giao lưu kinh tế trên biển thuận lợi do:</div>
+            <div class="options-grid">
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">A.</span> Gần trung tâm Đông Nam Á.</div>
+                <div class="option-item" onclick="selectOpt(this)" data-ans="true"><span class="opt-char">B.</span> Nằm trên ngã tư hàng hải.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">C.</span> Nằm trong vùng bão lũ.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">D.</span> Sinh vật biển đa dạng.</div>
+            </div>
+            <div class="answer-box"><span class="ans-label">Giải thích:</span> Vị trí ngã tư đường hàng hải và hàng không quốc tế.</div>
+        </div>
+
+        <div class="mcq-container">
+            <div class="question-text"><span class="q-num">Câu 10.</span> Quốc gia nào không giáp trên đất liền?</div>
+            <div class="options-grid">
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">A.</span> Trung Quốc.</div>
+                <div class="option-item" onclick="selectOpt(this)" data-ans="true"><span class="opt-char">B.</span> Thái Lan.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">C.</span> Campuchia.</div>
+                <div class="option-item" onclick="selectOpt(this)"><span class="opt-char">D.</span> Lào.</div>
+            </div>
+            <div class="answer-box"><span class="ans-label">Giải thích:</span> Nước ta chỉ giáp Trung Quốc, Lào, Campuchia trên bộ.</div>
+        </div>
+
+
+        <div class="module-accent mb-3 mt-4" style="font-size: 1.1rem;">II. Trắc nghiệm Đúng / Sai</div>
+        
+        <div class="tf-card" id="tf-q1">
+            <div class="tf-header"><span class="q-num" style="color:#1a4f9c; font-weight:800;">Câu 1.</span> Về vị trí địa lí và lãnh thổ:</div>
+            <div class="answer-box" style="margin:0; border-radius:0; border-bottom: 1px solid #e2e8f0; border-left:none;">
+                <span class="ans-label">Phân tích:</span> a-Sai (Bán cầu Đông), b-Sai (Biên giới Lào dài nhất), c-Đúng, d-Sai (Rìa Đông).
+            </div>
+            <table class="tf-table">
+                <thead><tr><th style="text-align:left;">Nhận định</th><th>Đúng</th><th>Sai</th></tr></thead>
+                <tbody>
+                    <tr data-ans="false">
+                        <td><strong>a)</strong> Nước ta nằm ở bán cầu Tây và bán cầu Bắc.</td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'true')"></span></td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'false')"></span></td>
+                    </tr>
+                    <tr data-ans="false">
+                        <td><strong>b)</strong> Đường biên giới Việt - Lào là ngắn nhất.</td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'true')"></span></td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'false')"></span></td>
+                    </tr>
+                    <tr data-ans="true">
+                        <td><strong>c)</strong> Vùng đất liền có diện tích 331.344 km².</td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'true')"></span></td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'false')"></span></td>
+                    </tr>
+                    <tr data-ans="false">
+                        <td><strong>d)</strong> Nước ta nằm ở rìa phía Tây bán đảo Đông Dương.</td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'true')"></span></td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'false')"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer class="page-footer"><span>Địa lí 12 — Bộ sách Hiện đại</span><span class="page-num">5</span></footer>
+    </div>
+
+
+    <!-- ================= TRANG 6 ================= -->
+    <div class="document-page">
+        <div class="tf-card mt-2" id="tf-q2">
+            <div class="tf-header"><span class="q-num" style="color:#1a4f9c; font-weight:800;">Câu 2.</span> Vùng biển Việt Nam theo UNCLOS 1982:</div>
+            <div class="answer-box" style="margin:0; border-radius:0; border-bottom: 1px solid #e2e8f0; border-left:none;">
+                <span class="ans-label">Phân tích:</span> a-Đúng, b-Sai (Nội thủy ở trong đường cơ sở), c-Đúng, d-Sai (Chỉ có quyền chủ quyền kinh tế).
+            </div>
+            <table class="tf-table">
+                <thead><tr><th style="text-align:left;">Nhận định</th><th>Đúng</th><th>Sai</th></tr></thead>
+                <tbody>
+                    <tr data-ans="true">
+                        <td><strong>a)</strong> Lãnh hải rộng 12 hải lí tính từ đường cơ sở.</td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'true')"></span></td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'false')"></span></td>
+                    </tr>
+                    <tr data-ans="false">
+                        <td><strong>b)</strong> Nội thủy nằm bên ngoài đường cơ sở.</td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'true')"></span></td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'false')"></span></td>
+                    </tr>
+                    <tr data-ans="true">
+                        <td><strong>c)</strong> Vùng tiếp giáp lãnh hải cũng rộng 12 hải lí.</td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'true')"></span></td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'false')"></span></td>
+                    </tr>
+                    <tr data-ans="false">
+                        <td><strong>d)</strong> Vùng đặc quyền kinh tế cho phép làm chủ lãnh thổ hoàn toàn.</td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'true')"></span></td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'false')"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tf-card" id="tf-q3">
+            <div class="tf-header"><span class="q-num" style="color:#1a4f9c; font-weight:800;">Câu 3.</span> Ảnh hưởng của vị trí địa lí đối với tự nhiên:</div>
+            <div class="answer-box" style="margin:0; border-radius:0; border-bottom: 1px solid #e2e8f0; border-left:none;">
+                <span class="ans-label">Phân tích:</span> a-Sai (Mưa lớn do biển, nhiệt độ mới do chí tuyến), b-Sai (Sinh vật phong phú), c-Đúng, d-Đúng.
+            </div>
+            <table class="tf-table">
+                <thead><tr><th style="text-align:left;">Nhận định</th><th>Đúng</th><th>Sai</th></tr></thead>
+                <tbody>
+                    <tr data-ans="false">
+                        <td><strong>a)</strong> Nội chí tuyến tạo ra lượng mưa cực lớn.</td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'true')"></span></td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'false')"></span></td>
+                    </tr>
+                    <tr data-ans="false">
+                        <td><strong>b)</strong> Sinh vật nước ta nghèo nàn do luồng di cư.</td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'true')"></span></td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'false')"></span></td>
+                    </tr>
+                    <tr data-ans="true">
+                        <td><strong>c)</strong> Tiếp giáp Biển Đông giúp điều hòa khí hậu.</td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'true')"></span></td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'false')"></span></td>
+                    </tr>
+                    <tr data-ans="true">
+                        <td><strong>d)</strong> Khu vực ta thường xuyên chịu ảnh hưởng bão.</td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'true')"></span></td>
+                        <td><span class="check-circle" onclick="toggleTFCircle(this, 'false')"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="quiz-controls no-print">
+            <div id="score-board">
+                <h3>KẾT QUẢ BÀI LÀM</h3>
+                <div id="score-number">0/22</div>
+                <p class="text-muted small mt-2">Điểm được tính bằng tổng các câu trắc nghiệm và các ý đúng/sai.</p>
+            </div>
+            <div class="btn-group-custom">
+                <button class="btn-custom btn-submit" onclick="submitQuiz()">Hoàn thành & Chấm điểm</button>
+                <button class="btn-custom btn-reset" onclick="resetQuiz()">Làm lại từ đầu</button>
+            </div>
+        </div>
+
+        <footer class="page-footer"><span>Địa lí 12 — Bộ sách Hiện đại</span><span class="page-num">6</span></footer>
+    </div>
+
+    <!-- HỆ THỐNG JAVASCRIPT CHẤM ĐIỂM -->
+    <script>
+        function toggleElem(id) {
+            var el = document.getElementById(id);
+            if (el.classList.contains('show')) {
+                el.classList.remove('show');
+                setTimeout(() => { if(!el.classList.contains('show')) el.style.display = 'none'; }, 300);
+            } else {
+                el.style.display = 'block'; void el.offsetWidth; el.classList.add('show');
+            }
+        }
+
+        function selectOpt(element) {
+            if (document.body.classList.contains('submitted')) return;
+            let siblings = element.parentNode.querySelectorAll('.option-item');
+            siblings.forEach(sib => sib.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function toggleTFCircle(element, type) {
+            if (document.body.classList.contains('submitted')) return;
+            let rowCells = element.closest('tr').querySelectorAll('.check-circle');
+            rowCells.forEach(cell => { cell.classList.remove('ticked'); cell.dataset.selected = ""; });
+            element.classList.add('ticked');
+            element.dataset.selected = type;
+        }
+
+        function submitQuiz() {
+            if (document.body.classList.contains('submitted')) return;
+            document.body.classList.add('submitted');
+            let score = 0; let totalScore = 22; // 10 MCQ + 12 TF rows
+
+            // 1. Chấm điểm Trắc nghiệm MCQ
+            document.querySelectorAll('.mcq-container').forEach(container => {
+                let selected = container.querySelector('.option-item.selected');
+                let correctOpt = container.querySelector('.option-item[data-ans="true"]');
+                
+                if (selected) {
+                    if (selected === correctOpt) {
+                        selected.classList.add('correct-ans'); score++;
+                    } else {
+                        selected.classList.add('wrong-ans');
+                        if (correctOpt) correctOpt.classList.add('correct-ans');
+                    }
+                } else {
+                    if (correctOpt) correctOpt.classList.add('correct-ans');
+                }
+            });
+
+            // 2. Chấm điểm Đúng/Sai
+            document.querySelectorAll('.tf-table tbody tr').forEach(row => {
+                let correctAnswer = row.getAttribute('data-ans'); 
+                let trueCircle = row.querySelector('td:nth-child(2) .check-circle');
+                let falseCircle = row.querySelector('td:nth-child(3) .check-circle');
+                
+                let selectedCircle = row.querySelector('.check-circle.ticked');
+                
+                if (selectedCircle) {
+                    if (selectedCircle.dataset.selected === correctAnswer) {
+                        selectedCircle.classList.add('correct-tf'); score++;
+                    } else {
+                        selectedCircle.classList.add('wrong-tf');
+                        if (correctAnswer === 'true') trueCircle.classList.add('missed-tf');
+                        if (correctAnswer === 'false') falseCircle.classList.add('missed-tf');
+                    }
+                } else {
+                    if (correctAnswer === 'true') trueCircle.classList.add('missed-tf');
+                    if (correctAnswer === 'false') falseCircle.classList.add('missed-tf');
+                }
+            });
+
+            // Hiện giải thích
+            document.querySelectorAll('.answer-box').forEach(box => {
+                box.style.display = 'block'; void box.offsetWidth; box.classList.add('show');
+            });
+
+            // Hiện bảng điểm
+            document.getElementById('score-number').innerText = score + '/' + totalScore;
+            let sb = document.getElementById('score-board');
+            sb.style.display = 'block'; void sb.offsetWidth; sb.style.animation = 'slideDown 0.3s ease';
+        }
+
+        function resetQuiz() {
+            document.body.classList.remove('submitted');
+            
+            // Xóa CSS MCQ
+            document.querySelectorAll('.option-item').forEach(opt => {
+                opt.classList.remove('selected', 'correct-ans', 'wrong-ans');
+            });
+
+            // Xóa CSS TF
+            document.querySelectorAll('.check-circle').forEach(circle => {
+                circle.classList.remove('ticked', 'correct-tf', 'wrong-tf', 'missed-tf');
+                circle.dataset.selected = "";
+            });
+
+            // Ẩn bảng giải thích
+            document.querySelectorAll('.answer-box').forEach(box => {
+                box.classList.remove('show'); box.style.display = 'none';
+            });
+
+            // Ẩn bảng điểm
+            document.getElementById('score-board').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
